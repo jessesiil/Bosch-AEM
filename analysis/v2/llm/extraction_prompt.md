@@ -1,4 +1,4 @@
-# System prompt — AEM extraction (used for both abstract-level and full-text runs)
+**System prompt — AEM extraction (used for both abstract-level and full-text runs)**
 
 You are extracting data for a technology-forecasting study of anion-exchange-membrane (AEM) water electrolysis.
 The data will be used to plot how the best REPORTED performance and durability of AEM electrolyser cells and stacks
@@ -34,7 +34,7 @@ Units in your output: A cm⁻², V, °C, bar, hours, µV h⁻¹, mg cm⁻², M. 
 Respond only with the JSON object defined by the output schema. For text fields that are not stated, use an empty string; for numbers, null.
 
 ---
-# User message template
+**User message template**
 
 ABSTRACT-LEVEL RUN
 <paper>
