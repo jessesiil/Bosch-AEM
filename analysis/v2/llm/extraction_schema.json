@@ -1,0 +1,316 @@
+{
+ "type": "object",
+ "additionalProperties": false,
+ "required": [
+  "in_scope",
+  "paper_type",
+  "highest_test_level",
+  "focus_components",
+  "screening_rationale",
+  "tests",
+  "values_from_cited_work_present"
+ ],
+ "properties": {
+  "in_scope": {
+   "type": "boolean",
+   "description": "True only if the paper is about anion-exchange-membrane WATER electrolysis (or its components) and water electrolysis is an application it actually addresses."
+  },
+  "paper_type": {
+   "type": "string",
+   "enum": [
+    "experimental",
+    "review",
+    "modelling",
+    "techno_economic",
+    "other"
+   ]
+  },
+  "highest_test_level": {
+   "type": "string",
+   "enum": [
+    "stack",
+    "single_cell",
+    "half_cell_only",
+    "ex_situ_only",
+    "none",
+    "unclear"
+   ],
+   "description": "Highest level at which THIS work tested an AEM water electrolyser. single_cell = MEA in an electrolyser cell; half_cell_only = three-electrode/RDE only; ex_situ_only = materials tests only."
+  },
+  "focus_components": {
+   "type": "array",
+   "items": {
+    "type": "string",
+    "enum": [
+     "membrane",
+     "ionomer",
+     "anode_catalyst",
+     "cathode_catalyst",
+     "ptl_gdl",
+     "mea_fabrication",
+     "stack_or_cell_design",
+     "operating_conditions",
+     "diagnostics_or_degradation_analysis",
+     "system_or_economics",
+     "other"
+    ]
+   }
+  },
+  "screening_rationale": {
+   "type": "string",
+   "description": "One sentence: why in/out of scope and which test level."
+  },
+  "tests": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+     "test_id",
+     "test_level",
+     "active_area_cm2",
+     "electrolyte",
+     "electrolyte_concentration_M",
+     "temperature_C",
+     "membrane",
+     "anode_catalyst",
+     "cathode_catalyst",
+     "pgm_loading_mg_cm2",
+     "evidence_conditions",
+     "performance_points",
+     "durability",
+     "notes"
+    ],
+    "properties": {
+     "test_id": {
+      "type": "string",
+      "description": "Short label, e.g. 'T1 pure water 60C'."
+     },
+     "test_level": {
+      "type": "string",
+      "enum": [
+       "single_cell",
+       "stack"
+      ]
+     },
+     "active_area_cm2": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "description": "Active area in cm2."
+     },
+     "electrolyte": {
+      "type": "string",
+      "enum": [
+       "pure_water",
+       "KOH",
+       "NaOH",
+       "K2CO3_or_KHCO3",
+       "other",
+       "not_stated"
+      ]
+     },
+     "electrolyte_concentration_M": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "description": "Molar concentration; null if only wt% given (put wt% in notes)."
+     },
+     "temperature_C": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "description": "Cell temperature in C."
+     },
+     "membrane": {
+      "type": "string",
+      "description": "Name/type as written. Empty string if not stated."
+     },
+     "anode_catalyst": {
+      "type": "string",
+      "description": "As written. Empty string if not stated."
+     },
+     "cathode_catalyst": {
+      "type": "string",
+      "description": "As written. Empty string if not stated."
+     },
+     "pgm_loading_mg_cm2": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "description": "Total platinum-group-metal loading if stated."
+     },
+     "evidence_conditions": {
+      "type": "string",
+      "description": "Verbatim quote(s) supporting the condition fields, separated by ' || '."
+     },
+     "performance_points": {
+      "type": "array",
+      "items": {
+       "type": "object",
+       "additionalProperties": false,
+       "required": [
+        "current_density_A_cm2",
+        "cell_voltage_V",
+        "quote",
+        "location"
+       ],
+       "properties": {
+        "current_density_A_cm2": {
+         "type": "number",
+         "description": "Convert mA cm-2 to A cm-2 (divide by 1000). Nothing else."
+        },
+        "cell_voltage_V": {
+         "type": "number",
+         "description": "FULL-CELL voltage. Never an overpotential or a half-cell potential."
+        },
+        "quote": {
+         "type": "string",
+         "description": "Verbatim text containing both numbers."
+        },
+        "location": {
+         "type": "string",
+         "description": "abstract | section name | Table N"
+        }
+       }
+      },
+      "description": "At most 6 items."
+     },
+     "durability": {
+      "anyOf": [
+       {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+         "duration_h",
+         "operation_mode",
+         "held_current_density_A_cm2",
+         "voltage_start_V",
+         "voltage_end_V",
+         "degradation_rate_uV_h",
+         "qualitative_claim",
+         "failure_or_end_reason",
+         "quote",
+         "location"
+        ],
+        "properties": {
+         "duration_h": {
+          "anyOf": [
+           {
+            "type": "number"
+           },
+           {
+            "type": "null"
+           }
+          ],
+          "description": "Test duration in hours; null if not stated."
+         },
+         "operation_mode": {
+          "type": "string",
+          "enum": [
+           "constant_current",
+           "constant_voltage",
+           "dynamic_or_cycling",
+           "not_stated"
+          ]
+         },
+         "held_current_density_A_cm2": {
+          "anyOf": [
+           {
+            "type": "number"
+           },
+           {
+            "type": "null"
+           }
+          ],
+          "description": "Current density held during the test."
+         },
+         "voltage_start_V": {
+          "anyOf": [
+           {
+            "type": "number"
+           },
+           {
+            "type": "null"
+           }
+          ],
+          "description": "Cell voltage at start, if stated."
+         },
+         "voltage_end_V": {
+          "anyOf": [
+           {
+            "type": "number"
+           },
+           {
+            "type": "null"
+           }
+          ],
+          "description": "Cell voltage at end, if stated."
+         },
+         "degradation_rate_uV_h": {
+          "anyOf": [
+           {
+            "type": "number"
+           },
+           {
+            "type": "null"
+           }
+          ],
+          "description": "ONLY if the text states a rate; convert mV/h to uV/h (x1000). Never calculate it yourself."
+         },
+         "qualitative_claim": {
+          "type": "string",
+          "description": "Verbatim wording of a qualitative stability claim, e.g. 'no noticeable degradation over 100 h'. Empty string if not stated."
+         },
+         "failure_or_end_reason": {
+          "type": "string",
+          "description": "e.g. 'test stopped', 'membrane failure'. Empty string if not stated."
+         },
+         "quote": {
+          "type": "string"
+         },
+         "location": {
+          "type": "string"
+         }
+        }
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "description": "Durability test of this cell/stack condition; null if none reported."
+     },
+     "notes": {
+      "type": "string",
+      "description": "Anything ambiguous. Empty string if not stated."
+     }
+    }
+   },
+   "description": "One entry per distinct AEM electrolyser test condition (cell or stack) whose results are reported in the text; at most 12; empty if none."
+  },
+  "values_from_cited_work_present": {
+   "type": "boolean",
+   "description": "True if the text quotes performance numbers of OTHER studies/companies (these must NOT be put in tests)."
+  }
+ }
+}
